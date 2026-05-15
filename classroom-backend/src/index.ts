@@ -6,7 +6,7 @@ import {toNodeHandler} from 'better-auth/node'
 import { auth } from './lib/auth'
 import classesRouter from './routes/classes'
 const app = express()
-const PORT = 8000
+const PORT = process.env.PORT || 8000
 
 if(!process.env.FRONTEND_URL) throw new Error('FRONTEND_URL is not set in .env file.')
 
@@ -25,6 +25,10 @@ app.get('/', (req, res) => {
     res.send('Hello, welcome to the Classroom API!')
 })
 
-app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`)
-})
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running at http://localhost:${PORT}`)
+    })
+}
+
+export default app;
