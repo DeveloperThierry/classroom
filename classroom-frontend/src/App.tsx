@@ -20,6 +20,7 @@ import SubjectsCreate from "./pages/subjects/create";
 import ClassesList from "./pages/classes/list";
 import ClassesCreate from "./pages/classes/create";
 import {BACKEND_BASE_URL} from "./constants/index"
+import ClassesShow from "./pages/classes/show";
 function App() {
   return (
     <BrowserRouter>
@@ -43,8 +44,9 @@ function App() {
                   name:'subjects', list:'/subjects', create: '/subjects/create',meta:{label:'Subjects', icon:<BookOpen/>}
                 },
                 {
-                  name:'classes', list:'/classes', create: '/classes/create',meta:{label:'Classes', icon:<GraduationCap/>}
+                  name:'classes', list:'/classes', create: '/classes/create', show:'/classes/show/:id',meta:{label:'Classes', icon:<GraduationCap/>}
                 }
+
               ]}
             >
               <Routes>
@@ -57,6 +59,7 @@ function App() {
                 <Route path='classes'>
                   <Route index element={<ClassesList/>}/>
                   <Route path='create' element={<ClassesCreate/>}/>
+                  <Route path='show/:id' element={<ClassesShow/>}/>
                 </Route>
                 </Route>
               </Routes>
