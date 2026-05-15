@@ -1,3 +1,16 @@
+
+![Screenshot](public/figma/LogIn.png)
+![Screenshot](public/figma/Desktop.jpg)
+![Screenshot](public/figma/Subjects.jpg)
+![Screenshot](public/figma/SubjectDetails.jpg)
+![Screenshot](public/figma/Departments.jpg)
+![Screenshot](public/figma/DepartmentDetails.jpg)
+![Screenshot](public/figma/Classes.jpg)
+![Screenshot](public/figma/ClassesDetails.jpg)
+![Screenshot](public/figma/Enrollments.jpg)
+![Screenshot](public/figma/Faculty.jpg)
+![Screenshot](public/figma/Profile.jpg)
+
 # University Management Dashboard (PERN Stack)
 
 This project is a full-stack University Management Dashboard built using the PERN stack (PostgreSQL, Express.js, React.js, Node.js). The application is designed to manage university classes, subjects, and enrollments with role-based access control.
