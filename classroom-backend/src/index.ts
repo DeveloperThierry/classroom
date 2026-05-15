@@ -1,10 +1,10 @@
 import express from 'express'
 import cors from 'cors'
-import subjectsRouter from './routes/subjects'
-import usersRouter from './routes/users'
+import subjectsRouter from './routes/subjects.js'
+import usersRouter from './routes/users.js'
 import {toNodeHandler} from 'better-auth/node'
-import { auth } from './lib/auth'
-import classesRouter from './routes/classes'
+import { auth } from './lib/auth.js'
+import classesRouter from './routes/classes.js'
 const app = express()
 const PORT = process.env.PORT || 8000
 
