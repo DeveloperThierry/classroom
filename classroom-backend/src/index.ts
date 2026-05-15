@@ -1,8 +1,10 @@
 import express from 'express'
 import cors from 'cors'
 import subjectsRouter from './routes/subjects'
+import usersRouter from './routes/users'
 import {toNodeHandler} from 'better-auth/node'
 import { auth } from './lib/auth'
+import classesRouter from './routes/classes'
 const app = express()
 const PORT = 8000
 
@@ -16,6 +18,8 @@ app.use(cors({
 app.all('/api/auth/*splat', toNodeHandler(auth));
 app.use(express.json())
 app.use('/api/subjects', subjectsRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/classes', classesRouter)
 
 app.get('/', (req, res) => {
     res.send('Hello, welcome to the Classroom API!')
