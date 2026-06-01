@@ -113,7 +113,7 @@ const SubjectsList = () => {
                 ))}
               </SelectContent>
             </Select>
-            {/* <CreateButton /> */}
+            <CreateButton resource="subjects"/>
           </div>
         </div>
       </div>
