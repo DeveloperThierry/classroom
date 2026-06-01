@@ -80,4 +80,31 @@ router.post("/", async (req, res) => {
     }
   });
 
+  router.get('/:id', async (req, res) => {
+    try {
+      const subjectId = Number(req.params.id);
+      if (!Number.isFinite(subjectId)) {
+        return res.status(400).json({ error: "Invalid subject ID" });
+      }
+  
+      const [subjectDetails] = await db
+        .select({
+          ...getTableColumns(subjects),
+          department: getTableColumns(departments),
+        })
+        .from(subjects)
+        .leftJoin(departments, eq(subjects.departmentId, departments.id))
+        .where(eq(subjects.id, subjectId));
+  
+      if (!subjectDetails) {
+        return res.status(404).json({ error: "Subject not found" });
+      }
+  
+      return res.status(200).json({ data: subjectDetails });
+    } catch (error) {
+      console.error("GET /subjects/:id error:", error);
+      return res.status(500).json({ error: "Failed to fetch subject details" });
+    }
+  });
+
 export default router

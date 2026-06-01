@@ -1,5 +1,5 @@
 import express from "express";
-import { departments } from "../db/schema/index.js";
+import { classes, departments, enrollments, subjects } from "../db/schema/index.js";
 import { and, eq, getTableColumns, ilike, or, sql, desc } from "drizzle-orm";
 import { db } from "../db/index.js";
 
@@ -74,6 +74,67 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.error("POST /departments error:", error);
     return res.status(500).json({ error: "Failed to create department" });
+  }
+});
+
+
+router.get('/:id', async (req, res) => {
+  try {
+    const deptId = Number(req.params.id);
+
+    // Validate that the ID is a valid number [9]
+    if (!Number.isFinite(deptId)) {
+      return res.status(400).json({ error: "Invalid department ID" });
+    }
+
+    // 1. Fetch Department Metadata
+    const [department] = await db
+      .select(getTableColumns(departments))
+      .from(departments)
+      .where(eq(departments.id, deptId));
+
+    if (!department) {
+      return res.status(404).json({ error: "Department not found" });
+    }
+
+    // 2. Calculate Totals (Subjects, Classes, and Students) [1]
+    
+    // Count total subjects in this department
+    const [subjectsCount] = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(subjects)
+      .where(eq(subjects.departmentId, deptId));
+
+    // Count total classes across all subjects in this department
+    const [classesCount] = await db
+      .select({ count: sql<number>`count(${classes.id})` })
+      .from(classes)
+      .innerJoin(subjects, eq(classes.subjectId, subjects.id))
+      .where(eq(subjects.departmentId, deptId));
+
+    // Count unique enrolled students in this department's classes [10, 11]
+    const [studentsCount] = await db
+      .select({ count: sql<number>`count(distinct ${enrollments.studentId})` })
+      .from(enrollments)
+      .innerJoin(classes, eq(enrollments.classId, classes.id))
+      .innerJoin(subjects, eq(classes.subjectId, subjects.id))
+      .where(eq(subjects.departmentId, deptId));
+
+    // 3. Return combined DepartmentWithTotals object [1, 12]
+    return res.status(200).json({
+      data: {
+        department,
+        totals: {
+          subjects: Number(subjectsCount?.count || 0),
+          classes: Number(classesCount?.count || 0),
+          enrolledStudents: Number(studentsCount?.count || 0)
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error("GET /departments/:id error:", error);
+    return res.status(500).json({ error: "Failed to get department details" [13] });
   }
 });
 

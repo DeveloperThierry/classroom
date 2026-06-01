@@ -1,4 +1,5 @@
 import { CreateButton } from "@/components/refine-ui/buttons/create";
+import { ShowButton } from "@/components/refine-ui/buttons/show";
 import { DataTable } from "@/components/refine-ui/data-table/data-table";
 import { Breadcrumb } from "@/components/refine-ui/layout/breadcrumb";
 import { ListView } from "@/components/refine-ui/views/list-view";
@@ -35,15 +36,15 @@ const DepartmentsList = () => {
   const searchFilters = searchQuery
     ? [{ field: "name", operator: "contains" as const, value: searchQuery }]
     : [];
-    const { query: departmentsQuery } = useList<Department>({
-        resource: "departments",
-        pagination: {
-          pageSize: 100,
-        },
-      });
-    
-      const departments = departmentsQuery?.data?.data || [];
-      const departmentsLoading = departmentsQuery.isLoading;
+  const { query: departmentsQuery } = useList<Department>({
+    resource: "departments",
+    pagination: {
+      pageSize: 100,
+    },
+  });
+
+  const departments = departmentsQuery?.data?.data || [];
+  const departmentsLoading = departmentsQuery.isLoading;
   const departmentTable = useTable<Department>({
     columns: useMemo<ColumnDef<Department>[]>(
       () => [
@@ -71,6 +72,21 @@ const DepartmentsList = () => {
           header: () => <p className="column-title">Description</p>,
           cell: ({ getValue }) => (
             <span className="truncate line-clamp-2">{getValue<string>()}</span>
+          ),
+        },
+        {
+          id: "details",
+          size: 140,
+          header: () => <p className="column-title">Details</p>,
+          cell: ({ row }) => (
+            <ShowButton
+              resource="departments"
+              recordItemId={row.original.id}
+              variant="outline"
+              size="sm"
+            >
+              View
+            </ShowButton>
           ),
         },
       ],

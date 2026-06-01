@@ -19,10 +19,12 @@ import SubjectsList from "./pages/subjects/list";
 import SubjectsCreate from "./pages/subjects/create";
 import ClassesList from "./pages/classes/list";
 import ClassesCreate from "./pages/classes/create";
-import {BACKEND_BASE_URL} from "./constants/index"
+import { BACKEND_BASE_URL } from "./constants/index";
 import ClassesShow from "./pages/classes/show";
 import DepartmentsList from "./pages/departments/list";
 import DepartmentsCreate from "./pages/departments/create";
+import SubjectsShow from "./pages/subjects/show";
+import DepartmentsShow from "./pages/departments/show";
 function App() {
   return (
     <BrowserRouter>
@@ -40,35 +42,57 @@ function App() {
               }}
               resources={[
                 {
-                  name:'dashboard', list:'/', meta:{label:'Home', icon:<Home/>}
+                  name: "dashboard",
+                  list: "/",
+                  meta: { label: "Home", icon: <Home /> },
                 },
                 {
-                  name:'subjects', list:'/subjects', create: '/subjects/create',meta:{label:'Subjects', icon:<BookOpen/>}
+                  name: "subjects",
+                  list: "/subjects",
+                  create: "/subjects/create",
+                  show: "/subjects/show/:id",
+                  meta: { label: "Subjects", icon: <BookOpen /> },
                 },
                 {
-                  name:'classes', list:'/classes', create: '/classes/create', show:'/classes/show/:id',meta:{label:'Classes', icon:<GraduationCap/>}
+                  name: "classes",
+                  list: "/classes",
+                  create: "/classes/create",
+                  show: "/classes/show/:id",
+                  meta: { label: "Classes", icon: <GraduationCap /> },
                 },
                 {
-                  name:'departments', list:'/departments', create: '/departments/create',meta:{label:'Departments', icon:<Building/>}
+                  name: "departments",
+                  list: "/departments",
+                  create: "/departments/create",
+                  show: "/departments/show/:id",
+                  meta: { label: "Departments", icon: <Building /> },
                 },
               ]}
             >
               <Routes>
-                <Route element={<Layout><Outlet/></Layout>}>
-                <Route path="/" element={<Dashboard/>} />
-                <Route path='subjects'>
-                  <Route index element={<SubjectsList/>}/>
-                  <Route path='create' element={<SubjectsCreate/>}/>
-                </Route>
-                <Route path='classes'>
-                  <Route index element={<ClassesList/>}/>
-                  <Route path='create' element={<ClassesCreate/>}/>
-                  <Route path='show/:id' element={<ClassesShow/>}/>
-                </Route>
-                <Route path='departments'>
-                  <Route index element={<DepartmentsList/>}/>
-                  <Route path='create' element={<DepartmentsCreate/>}/>
-                </Route>
+                <Route
+                  element={
+                    <Layout>
+                      <Outlet />
+                    </Layout>
+                  }
+                >
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="subjects">
+                    <Route index element={<SubjectsList />} />
+                    <Route path="create" element={<SubjectsCreate />} />
+                    <Route path="show/:id" element={<SubjectsShow />} />
+                  </Route>
+                  <Route path="classes">
+                    <Route index element={<ClassesList />} />
+                    <Route path="create" element={<ClassesCreate />} />
+                    <Route path="show/:id" element={<ClassesShow />} />
+                  </Route>
+                  <Route path="departments">
+                    <Route index element={<DepartmentsList />} />
+                    <Route path="create" element={<DepartmentsCreate />} />
+                    <Route path="show/:id" element={<DepartmentsShow />} />
+                  </Route>
                 </Route>
               </Routes>
               <Toaster />

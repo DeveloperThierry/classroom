@@ -109,7 +109,7 @@ const Create = () => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Introduction to Computer Science"
+                          placeholder="Computing and Informational Sciences"
                           {...field}
                         />
                       </FormControl>
@@ -128,7 +128,7 @@ const Create = () => {
                         <span className="text-orange-600">*</span>
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="CS101" {...field} />
+                        <Input placeholder="CIS" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -143,7 +143,7 @@ const Create = () => {
                       <FormLabel>Description</FormLabel>
                       <FormControl>
                         <Textarea
-                          placeholder="Brief description about the department curriculum..."
+                          placeholder="Brief description about the department..."
                           {...field}
                         />
                       </FormControl>

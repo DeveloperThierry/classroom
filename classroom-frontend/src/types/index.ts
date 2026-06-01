@@ -91,8 +91,20 @@ export type Schedule = {
 
 export type Department = {
     id: number;
+    code:string
     name: string;
     description: string;
+};
+
+export type DepartmentTotals = {
+    subjects: number;
+    classes: number;
+    enrolledStudents: number;
+};
+
+export type DepartmentWithTotals = {
+    department: Department;
+    totals: DepartmentTotals;
 };
 
 export type ClassDetails = {
